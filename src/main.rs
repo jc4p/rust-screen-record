@@ -12,8 +12,12 @@ use std::fmt::Debug;
 unsafe extern "system" fn callback(monitor: HMONITOR, hdc: HDC, work_rect: LPRECT, d: LPARAM) -> BOOL {
     // let monitorInfoPtr: LPMONITORINFO  = ptr::null_mut();
     let mut monitorInfo: Box<MONITORINFO> = Box::new(MONITORINFO { cbSize: 0, rcMonitor: RECT {left: 0, top: 0, right: 0, bottom: 0}, rcWork: RECT {left: 0, top: 0, right: 0, bottom: 0}, dwFlags: 0 });
-    println!("Get monitor info successful: {:?}", user32::GetMonitorInfoW(monitor, monitorInfo.as_mut()));
+    monitorInfo.cbSize = mem::size_of::<MONITORINFO>() as u32;
+    user32::GetMonitorInfoW(monitor, monitorInfo.as_mut());
     println!("Got monitor info: {:?}", monitorInfo);
+    if monitorInfo.dwFlags == 1 {
+        return 0;
+    }
     1
 }
 
