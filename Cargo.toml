@@ -1,0 +1,8 @@
+[package]
+name = "recorder"
+version = "0.1.0"
+authors = ["Kasra Rahjerdi <contact@kasrarahjerdi.com>"]
+
+[dependencies]
+winapi = "0.2"
+user32-sys = "0.2.0"
